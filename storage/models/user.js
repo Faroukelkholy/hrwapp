@@ -42,10 +42,12 @@ userSchema.statics.authenticateUser = function authenticateUser(user) {
       email: user.email.toLowerCase(),
       password:password
   },{
+    _id:0,
     password:0,
     firstname:0,
     lastname:0,
-    dob:0
+    dob:0,
+    addedBy:0
 });
 };
 
@@ -69,7 +71,11 @@ userSchema.statics.saveUser = function saveUser(user, hr) {
 };
 
 userSchema.statics.getUsers = function getUsers() {
-  return this.find({});
+  return this.find({}, {
+    _id: 0,
+    password:0,
+    addedBy:0
+  });
 };
 
 userSchema.statics.findUser = function findUser(user) {

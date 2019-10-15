@@ -43,20 +43,10 @@ post_Schema.statics.savePost = function savePost(post) {
 
 
 
-post_Schema.statics.getPost = function getPost(post) {
-  return this.aggregate([{
-      $match: {
-        _id: ObjectID(post._id),
-        type: post.type
-      }
-    },
-    {
-      $sort: {
-        _id: -1
-      }
-    }
-  ]);
-
+post_Schema.statics.getPosts = function getPosts(type) {
+  return this.find({type: type}).sort({
+    "_id": -1
+  });
 };
 
 

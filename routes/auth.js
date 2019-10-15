@@ -16,7 +16,6 @@ router.post('/login', async (req, res)=>{
     } else {
       try{
         const access_token = await mongoDriver.token.saveToken(req.body.user);
-        console.log('/ login access_token:',access_token);
         if(access_token){
           return res.status(200).json({
             message: "Success",
