@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('./models/user.js');
 const Post = require('./models/post.js');
+const Token = require('./models/token.js');
 const when = require("when");
 
 
@@ -15,6 +16,7 @@ class MongoUFE{
     mongoose.Promise = when.Promise;
     this.db = mongoose.createConnection("mongodb://"+mongoSettings.dbURL + mongoSettings.port + mongoSettings.dbName, { useNewUrlParser: true,auth:{authdb:"ufe"},user:mongoSettings.username,pass:mongoSettings.pwd });
     mongoose.set('useCreateIndex', true);  
+    mongoose.set('useUnifiedTopology', true);
     mongoose.set('debug', function (coll, method, query, doc,options) {
         console.log(` Mongoose collection: ${coll.toString()} --method: ${method.toString()} --query: ${Object.values(query)} `);
        });
@@ -31,6 +33,7 @@ class MongoUFE{
       console.log("mongoDb connected");
       _this.user = _this.db.model("user", User);
       _this.post = _this.db.model("post", Post);
+      _this.token = _this.db.model("token", Token);
       _this.user.createIndexes().then(function() {
         console.log('create user index successfully');
         return resolve();

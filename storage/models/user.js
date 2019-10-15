@@ -30,20 +30,25 @@ const userSchema = Schema({
     name: String,
     email: String,
     mobile: String,
+    gender: String,
     title: String,
-    gender: String
+    job: String
   }
 });
 
-// userSchema.statics.saveUser = function saveUser(user) {
-//      this.findOne({email:user.email},{email:1}).then((usersQueried)=>{
-//       if(usersQueried){
-//         return  reject("user exists");
-//       }
-//        const userCreated = new this(user);
-//        return userCreated.save();
-//     });
-// };
+userSchema.statics.authenticateUser = function authenticateUser(user) {
+  const password = crypto.createHash("md5").update(user.password).digest("hex");
+  return this.findOne({
+      email: user.email.toLowerCase(),
+      password:password
+  },{
+    password:0,
+    firstname:0,
+    lastname:0,
+    dob:0
+});
+};
+
 userSchema.statics.saveUser = function saveUser(user, hr) {
   const userCreated = new this(user);
   userCreated.name = user.firstname + " " + user.lastname;

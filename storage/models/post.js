@@ -19,8 +19,9 @@ const post_Schema = new Schema({
     name: String,
     email: String,
     mobile:String,
+    gender:String,
     title: String,
-    gender:String
+    job: String
   }
 });
 
