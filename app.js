@@ -21,7 +21,9 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
         next();
    });
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/dist/hrApp')));
+
+app.get('/*',(req,res)=>{ res.sendFile(path.join(__dirname))});
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
